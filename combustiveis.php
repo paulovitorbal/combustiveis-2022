@@ -109,9 +109,15 @@ var_dump($results);
 function formatBr(string $number):string{
     return str_replace('.', ',', $number);
 }
+$outputExcel = fopen(getFileName('output_excel.csv'), 'w+');
 $output = fopen(getFileName('output.csv'), 'w+');
-fputcsv($output, array_keys($results[0]), ';');
+fputcsv($outputExcel, array_keys($results[0]), ';');
 foreach ($results as $line){
-    fputcsv($output, $line, ';');
+    fputcsv($outputExcel, $line, ';');
+}
+fclose($outputExcel);
+fputcsv($output, array_keys($results[0]));
+foreach ($results as $line){
+    fputcsv($output, $line);
 }
 fclose($output);
